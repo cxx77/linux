@@ -1,0 +1,169 @@
+第一节 认识学习环境
+        1. 打开桌面上的Xface 终端，Xface只是X window协议的一种客户端类型。这里，理解为window系统下的cmd就好。
+
+        2. 输入ls，ls是list files缩写，意思是列出目录下的文件，这里显示了 Code 和Desktop的两个文件
+
+        3. 输入pwd，pwd是print working directory的缩写，意思是显示工作目录
+
+        Linux的基本介绍就到这里，目的是知道如何打开一个命令终端，如何输入命令。
+
+        PS：上面的$表示shiyanlou这个用户是一个普通用户，有时候你见过#，说明这个用户是一个管理员权限的用户，例如root用户。
+        
+第二节：
+   简单指令：
+        1. cd：是change directory，更改目录的意思，cd 后面跟着绝对路径；
+               cd /：切换到根目录
+               cd 后面跟着空格，默认切换到用户的home目录
+               cd ~：也是切换到用户home目录
+               cd ..：切换到当前目录的父目录
+               
+               在cd过程中经常结合Tab键一起使用，Tab键的好处是自动补全。
+               例如你cd D 然后按下Tab键，会自动化变成cd Desktop，前提是你当前路径下只有一个大写D开头的文件夹。
+               
+               notice: cd 到带空格的文件夹：
+                      my test是一个带空格的文件夹，直接cd到带空格的文件夹是不行，会报错。有三种方法切换到带空格的文件夹：
+                             cd my\ test
+                             cd "my test"
+                             cd 'my text'
+                                     
+        2. ls -a：显示全部文件，a是单词all的缩写
+        
+        3. ls -l：长格式显示文件信息，l 是单词Long的缩写 -rwxr-xr-x ...
+                  1） 第一列 drwxrwxr -x ，字母d代表目录或者文件，目录directory的意思，r表示read，w表示wirte，-表示是文件，x表示文件执行权限，一般这有三组权限，前三个rwx表示该文件拥有者的权限，中间三个rwx表示文件的所有组权限，最后三个r-x，表示对其他人访问的权限（读，执行,没有写权限）。
+
+                  2） 第二列 数字2表示有多少个链接指向这个文件
+
+                  3） 第三列 shiyanlou是这个文件或文件夹的拥有者
+
+                  4） 第四列，表示谁是这个文件或文件夹的所有组
+
+                  5） 第五列，表示以字节为单位的大小，目录的大小总是4096大小
+
+                  6） 第六列，文件的最后修改时间
+
+                  7） 第七列，文件名或者目录
+        4. ls -al：列出所有文件并长格式显示（点号开头的文件表示隐藏文件）
+        
+        5. ls /：显示根目录下文件清单，你不需要cd到根目录就可以直接查看它下的文件
+        
+        6. clear：清屏，如果你向上滚动鼠标滑轮，你还是可以发现之前输入过的命令的历史记录，clear只是给你翻页，让你感觉清屏的效果。
+        
+        7. ls ~：波浪线，这个可以显示用户的家目录
+        
+        8. ls .. 和ls ../..：查看父目录的文件，..表示上一层，如果你要返回上一层的上一层，就  ../..表示
+        
+        9. ls -lS：小写的L和大写的S，表示文件大小排序，S是size的意思（文件按size从大到小排列）
+        
+        10. ls xxx/*.xxx：有点类似筛选，这里例如我们要只显示test文件夹下的txt文件类型
+        
+        11. ls -lS > out.txt：在当前相同路径下，把文件清单名称输出到一个out.txt的文件里
+        
+        以上介绍了常用的ls命令和一些带选项的结合的命令。如果还需要更多了解ls命令，可以在终端输入man ls，man是manual的缩写，man是linxu下命令查询的一个手册。
+        
+第三节：
+    cat指令：cat是英文语句concatenate files and print on the standard output的缩写，
+             中文的意思是，把字符串连接后输出到屏幕上，此时的标准输出就是屏幕。
+    
+    1. cat：后面不写任何参数，可以默认打开一个空白文件
+    
+    2. cat空格然后回车，默认打开一个空白的模板，你可以随意写东西，如果要退出这个模式，需要按下ctrl+d ，d 就是end的意思，结束
+    
+    file、file2位带后缀的文件名
+    3. cat file1
+    4. cat file1 file2
+    
+    5. cat -b file1：上面的-b表示no blank，不计算空行的情况下显示行号
+    6. cat -n file1：行数显示，空行也计算
+    7. cat -E file：显示到每行结束部分，并在每行尾部显示$符号
+    8. man cat 去了解更多信息
+    
+第四节：
+      Linux下文件重定向：在linux中重定向用符号 “>” 表示，语法一般是：源文件 > 目标文件
+                        通过这个可以知道了如何把终端里面输入的字符保存到一个具体文件中去
+                        
+      1. cat > out.txt：每次 cat > c.txt 后都会覆盖之前的内容，保存最近的内容，有没有办法不重写，直接在后面文件尾部添加新内容
+      
+      2. cat >> c.txt：就不会覆盖旧内容
+      
+      3. cat file1 > file2：把一个文件内容拷贝到一个新文件（原内容覆盖掉）
+      
+      4. cat file1 file2 > file3：把两个文件内容拷贝到一个新文件（原内容覆盖掉，cat file1 file2 》> file3：不覆盖原内容）
+      
+第五节：
+      mkdir命令：make directory 的缩写。mkdir 就是用来创建路径，一般就是用来创建文件夹的。
+      
+      1. $ cd Desktop
+         $ mkdir image：直接在桌面创建一个名称为image的文件夹
+         
+      2. $ mkdir image/pics：在上面基础上，image下新建一个pics文件夹
+      
+      3. 不能夸目录创建，桌面上面没有names这个文件夹，如果直接想创建names/mark，会报错
+      
+      4. $ mkdir -p names/test：父目录和子目录一起创建，p参数表示父目录，对应英文单词parent
+      
+      5. $ mkdir -p names/{luck,tom,xixi}：父目录下创建多个子目录
+         注意：{tom,lucy,anthony}三个之间用逗号隔开，不能有空格
+         
+第六节：
+      rmdir和rm命令：删除文件和删除目录命令。
+      通过下面的例子，来练习下rmdir和rm的基本使用。rm是英文单词remove的缩写，rmdir就是remove directory的缩写。
+      
+      1. rmdir file：单个空文件夹
+      2. rmdir 删除多个空目录
+             $ mkdir -p a/b/c/d/e/
+             $ rmdir a/b/c/d/e    
+             $ ls -R           
+             看看效果，发现只删除了最后一个目录e
+             
+             $ rmdir -p a/b/c/d   因为上面已经删除了e目录，所以这里是 a/b/c/d/
+             
+      3. rmdir不能删除有文件的目录
+             $ mkdir -p a/b/c/d/e
+             $ cd a/b
+             $ cat > abc.txt
+             $ cd ../..     ：cd到Desktop
+             $ rmdir -p a/b/c/d/e
+             报错：
+                  删除了c/d/e目录，由于a/b/下还有abc.txt文件，rmdir删除不了，
+                  上面p代表父目录，v表示版本，通过v可以看到删除的历史记录，是一个一个目录删除。
+                              
+      4. 通过rm命令解决上述问题：
+             rm -r 强制删除一个目录下所有文件和路径：
+             Desktop/ $ mkdir -p a/b/c/d/e
+             Desktop/ $ rm -r a
+             
+      总结：一般，rm -r 目录 这个命令使用最多，强制删除一个目录下所有文件和路径。也可以通过 man rm 了解更多使用方法。
+      
+第七节：
+      cp命令：英文单词copy的缩写，就是拷贝文件的意思。cp的基本语法是：cp 参数 源文件路径  目的地路径
+      
+      1. cp file1.txt file2.txt：file1内容copy到file2中，并覆盖file2原内容
+      
+      2. 把file1.txt 拷贝到一个空白的路径下：
+            $ mkdir newdir
+            $ cp file1.txt newdir
+            $ cd newdir
+            $ ls
+            
+      3. cp file1.txt file2.txt dir2：file1、file2添加到newdir文件夹中，不会覆盖原内容
+      
+      4. cp -i file1.txt file2.txt dir1：覆盖文件，需要用到参数 -i， i表示交互的意思（文件名相同时询问是否覆盖同名原文件）
+      
+      5. 文件夹能否复制：
+                  cp默认是拷贝文件，而不包括目录，所以上面第一个cp dir1 dir3会报略过dir1这个信息，这个时候就需要用到参数-R
+                  
+                  cp -vR dir1 dir4：
+                  rmdir也介绍了参数-r，这样也表示，可以看到变更记录。还有其他可以通过 man cp查看更多使用方法。
+                  
+第八节：
+      mv命令：mv是move的意思，中文就是剪切的意思。
+      
+      来练习下以下场景，这篇开始，利用实验楼里面的切换界面功能，也就是没有桌面版的linux，只有字符界面
+      不管怎么说，我们先来看看如何操作，基本上之前学到的，命令都要用到，不然你无法创建文件，创建目录，查看文件下文件清单等等。
+      注意哈，本系列大部分操作开始的路径都是Desktop，所以你在输入一个命令前，看看$前面显示的路径是不是Desktop。
+      
+      
+
+            
+      
+        
