@@ -366,8 +366,164 @@
                 7) 重复步骤5,6,例如740,741,672等等
                 
 第十四节：
+      which和whatis命令
+              which：告诉你相关程序的路径
+                    $ which bash
+                    $ which ls
+                    $ which cat
+                    $ which firefox
+
+              whatis：查询一个命令的含义
+                    $ whatis ls
+                    $ whatis firefox
+                    $ whatis cat
+                    $ whatis top
+
+              比较 man top 与 whatis top 的区别
+                    man -- 在线参考手册的接口
+                    whatis -- 显示在线手册页的说明
 
 第十五节：
+        find指令：find就是用来查找文件用的，在实验楼的zash环境，感觉这个find命令不好使
+        
+        1. $ find -name filename
+        2. $ find /etc -name filename
+        3. $ sudo find /etc -name filename
+        4. 基本了解 find / -name filename 就可以查找文件
+     
+     
+第十六节：
+       wc命令：word count的缩写，中文就是单词统计的意思
+       
+              $ cd Desktop
+              $ cat > file.txt
+              xixi is a beauty girl
+              this is test message
+              hengheng
+              $ wc file.txt
+              
+              wc带参数用法:
+                $ wc -c file.txt
+                $ wc -l file.txt
+                $ wc -w file.txt
+                
+        cal命令：cal是日历单词的缩写，来看看下面cal的常用用法
+                1. $ cal 或者cal -1 查看当前月份日历
+                2. $ ncal 竖向显示日历
+                3. $ cal 2017 显示一年日历
+                4. $ cal 2 2018 查看某一年某一月日历
+                5. $ cal -3 查看最近三个月日历
+                
+        date命令:时间和日期命令
+                1. $ date
+                2. $ date +%d%h%y
+                3. $ date +%D
+                4. $ date +%T
+                5. $ date +%H
+                6. $ date +%H%M%S
+                7. $ date "+%d-%h-%y"
+                8. $ date "+%d/%h/%y"
+                9. $ date '+%y-%h-%d %H:%M:%S'
+                
+                date设置时间，这里实验楼权限问题不让设置，应该是和网络时间服务器同步
+                        $ date -s "11/20/2018 12:48:00"
+                        -s：s表示settings.
+                        
+
+第十七节：
+        在一个终端一次运行多个命令：输入多个命令后，敲击回车，linux中多个命令都被执行
+        
+        1. $ ls ; pwd 采用分号（；）分隔多个命令
+        2. $ date ; cal ; pwd
+        3. $ date && ls && cal && pwd
+        4. $ ls ; pw 如果命令之间有一个命令写错，不影响其他命令执行
+       
+       
+第十八节：
+        ifconfig命令：用来查看网络相关的一个命令，例如可以查看MAC地址，网络地址，网关等信息
+        
+        1. $ whatis ifconfig
+        2. $ ifconfig
+                  eth0表示有线网卡1，如果有多个网卡，可能还有eth1,eth2等等。如果是无线的笔记本，可能有wth0，表示无线网卡。
+                  上面可以看到硬件地址，I地址，网关，接收数据包等信息。
+        3. $ ifconfig eth0
+        4. $ ifconfig eth0 up
+           $ ifconfig eth0 down
+           开启和禁用网卡的命令:
+                up表示启动，down表示禁用，这个结合起来，就可以达到重启网络的效果
+                
+                
+        tar压缩包和解压命令:tar包的压缩和解压缩
+                准备：
+                        $ cd Desktop
+                        $ mkdir file
+                        $ cd file
+                        $ cat > test.txt
+                        xixi is a beauty girl
+                        hengheng is a bad guy
+                        $ ls
+                
+                创建压缩包：
+                        $ cd ..
+                        $ tar -cvf hlovex.tar file
+                        $ ls
+                        c 是 create，创建的意思
+                        v 是之前提到的 verbose，就是可以看到这个命中执行发生了什么事情
+                        f 是 file 的意思。
+                        
+                tar 结尾的解压：
+                        $ rm -r file
+                        $ ls
+                        % tar -xvf hlovex.tar
+                        $ ls
+                        -x是表示extract，摘取的意思，这里翻译解压
+                        
+                创建xx.tar.gz文件:
+                        $ ls
+                        $ tar -cvfz ba.tar.gz file
+                        $ tar -czvf ba.tar.gz file
+                        
+                解压缩.tar.gz文件：
+                        $ ls
+                        $ rm -r file
+                        $ tar -xzvf ba.tar.gz
+                        $ ls
+                        
+
+第十九节：
+        grep命令：global search regular expression(RE) and print out the line”的缩写
+                 意思是找到符合一定规则的字符并打印该行到终端
+                 grep主要是用来在文件中匹配摘取一些按照一定规则的字符串
+                 
+        1. $ cd Desktop
+        2. $ man tar > file.txt 创建一个 file.txt 用来测试
+           mdoc waring: Empty input line #162
+           mdoc waring: Empty input line #164
+           mdoc waring: Empty input line #180
+           mdoc waring: Empty input line #182
+           mdoc waring: Empty input line #184
+           mdoc waring: Empty input line #334
+           mdoc waring: Empty input line #336
+        3. $ grep -n "Some options" file.txt
+           -n表示number，显示行号。
+        4. 创建多个文件测试
+                $ cp file.txt file1.txt
+                $ cp file.txt file2.txt
+                多文件查找
+                $ grep -n "Some options" file.txt file1.txt file2.txt
+                $ grep -n "Some options"
+                $ grep -i "option" file.txt ：-i 忽略大小写
+                $ grep -nv "Some options" file.txt ：表示不包含 Some options 字段；-v表示invert match，不匹配的意思
+                        
+                
+                
+           
+                                 
+                        
+                     
+                        
+                  
+                
         
                 
 
