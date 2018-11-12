@@ -256,11 +256,115 @@
               再次按下i，就回到top的正常界面。
 
         总结，知道利用top查看CPU和内存消耗就可以了，这个在软件测试面试中，好像经常被问到。
+        
       
 第十三节：   
         ps和kill命令：
                 ps：process status，查看当前进程
                 kill：linunx中是杀进程的意思。就像windows，有时候那个程序没响应，你就可以去任务管理中删除那个没有响应的程序。
-      
-      
         
+        1.ps -ux, 查看当前的激活的进程
+
+        2.ps -aux,查看当前所有进程，a是all的意思
+
+        3.ps -U shiyanlou，查看shiyanlou这个用户有关的进程
+
+        4.打开实验楼桌面这个Linux的设置面板
+        5.通过ps -ux 找到这个设置面板的进程，然后kill掉
+        6.强制杀进程：kill -KILL pid 或者 kill -9 pid
+        
+        
+        echo命令：
+                echo的作用就是，把文本输出到标准输出，例如终端。有点类似开发语言中的print语句。
+        
+        echo的基本用法：
+                1. $ echo hello world
+                2. $ echo "hello world"
+                有不带双引号的，也有带，都可以输出同样效果，这里建议加上双引号。
+                
+                echo和变量的使用:
+                        $ myvar="i am beauty"
+                        $ echo myvar
+                        
+                        $ x=10
+                        $ echo "the value of x is $x"
+                        
+                        上面的变量只有在当前终端窗口有效，如果你关闭了当前终端窗口，就识别不了x和myvar
+                
+                echo处理字符转义的输出:
+                        有时候，我们需要输出多行，需要用到换行符号，有时候需要用到制表符。
+                        
+                        $ echo "some \text"
+                        $ echo "some \ntext"
+                        \t表示制表符，就是一个tab输出的空格，\n表示换行符号。这个和开发语言中都是一样的。
+                
+        文件使用chmod命令:
+                chmod是change mode的缩写，是修改文件权限的一个命令。
+                在全面介绍ls这篇文章，我们大致介绍了一下有关文件权限的概念
+                一个文件分别有三组权限：用户拥有者，用户组，其他。下面的介绍需要用到这点知识。
+
+                $ cd Desktop
+                $ cat > file
+                xixi is a beauty girl
+                $ ls -l
+                        第一个横杆-表示文件，如果是d表示目录。还有可能是l,表示链接。
+
+                        第一组（rw-）表示用户拥有者权限，现在是有读写权限，没有执行权限。
+
+                        第二组（rw-）表示用户组权限，现在是有读写权限，没有执行权限。
+
+                        第三组（r--）表示其他权限，就是针对其他所有人，现在只有读的权限。
+
+               $ chmod o+x  在其他权限添加可执行权限
+                        第三组其他权限，已经显示了x，说明有执行权限。这里o表示others，代表其他权限组。
+
+               $ chmod g+x file  给用户组添加执行权限
+                        之前是rw-，现在变成rwx，这里g表示group，用户组的意思。
+
+               $  chmod g-wx file 把文件file的用户组权限变成只读
+
+               $ chmod ug=rwx file 把file的用户拥有者和用户组都变成读写执行权限
+
+               $ chmod ugo-rwx  删除文件file的所有权限
+               $ chmod a-rwx file 也可以实现，a表示all，这里等同u,g,o三组
+
+               $ chmod u+rw,g=rw,o+r file 分别设置三个组不同权限，逗号隔开
+
+               总结：
+                       命令chmod就是一个权限修改的命令，要记住三组权限，包括前后顺序。
+                       u代表用户拥有者，g代表用户组，o代表其他。
+                       权限的添加和删除，分别可以使用加号或者减号来完成。
+                       如果直接告诉一个组什么权限，可以直接用等号来实现，三组之间可以同时进行权限修改，用逗号隔开。
+
+                       chmod 后面还可以用数字实现，例如 chmod 777 file， 就可以使file变成-rwxrwxrwx，用u,g,o上面的这种方式效果更好，更好记住。
+                       
+      
+      目录使用chmod命令：
+                上面介绍chome在文件上的相关操作，这里介绍chmod在目录上的相关操作。
+                
+                1. Desktop $ mkdir dir
+                2. $ ls -ld dir  第一个d表示directory，告诉你这个东西是一个目录
+                3. $ chmod u-w dir 让目录dir不能写
+                        输入完chmod u-w dir后，你就发现桌面dir这个文件夹出现了一把锁。这里我们再通过chmod u+w dir改回来
+                4. $ chmod u-r dir，让dir不能读（ls 无法查看dir目录下状态，内部文件内容可读）
+                
+      
+      chmod后面使用数字来表示权限：
+                chomd 777 file.txt，就可以把这个文件的权限改成 -rwxrwxrwx
+                1) ls
+
+                2) cd Desktop
+
+                3) touch file.txt
+
+                4) ls -l file.txt
+
+                5) chmod 777 file.txt
+
+                6) ls -l file.txt
+
+                7) 重复步骤5,6,例如740,741,672等等
+                
+
+
+
