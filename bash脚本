@@ -1,0 +1,48 @@
+软件测试这块涉及到linux的就是基本命令的使用，和shell脚本编程，当然会shell脚本是加分项。
+学习了差不多20个命令，命令和脚本到底有什么关系呢，和shell编程又有什么联系呢？
+    --shell脚本，只是一堆命令的集合。
+    
+第一节：第一个shell脚本
+
+      1. 桌面创建一个myscript.sh文件
+         为什么是 .sh 呢，linux 中 shell 脚本急速这个格式。
+         我们还需要知道你当前 bash 脚本在什么路径
+              $ which base    打印出了我们bash的路径是 /bin/bash ，这个路径我们待会需要写入到脚本文件。
+      
+      2. 桌面找到myscript.sh文件，右键用实验楼gedit编辑器打开
+         第一行  #！/bin/bash  表示这个脚本用什么去执行，我们这里是bash
+         其实linux中有很多类似bash的程序，有c shell 还有z shell等等。
+         输入内容：
+            ls -l
+            mkdir newdir
+            cd newdir
+            touch file.txt
+         
+      3. 运行下脚本
+         $ ./myscript.sh
+         zsh: 权限不够
+         $ chmod +x myscript.sh
+         $ ./myscript.sh
+         
+         默认是没有执行权限，需要添加相关权限。
+         执行了ls -l这个命令，也在桌面新建了一个newdir的文件夹。
+      
+      所以，shell脚本就是很多简单的命令，通过一些控制语句和其他方法去执行复杂任务的命令集合。
+
+
+第二节：which和whatis命令
+      which：告诉你相关程序的路径
+            $ which bash
+            $ which ls
+            $ which cat
+            $ which firefox
+            
+      whatis：查询一个命令的含义
+            $ whatis ls
+            $ whatis firefox
+            $ whatis cat
+            $ whatis top
+            
+      比较 man top 与 whatis top 的区别
+            man -- 在线参考手册的接口
+            whatis -- 显示在线手册页的说明
