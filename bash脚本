@@ -590,7 +590,30 @@
                 
         2. for循环去执行命令
                 for循环执行不同命令：
-                    #! 
+                    #! /bin/bash
+                    for command in ls pwd date
+                    do
+                        echo "---------$command--------"
+                        $command
+                    done
+                    ****************************************
+                    for循环加上if语句打印文件
+                    for item in *
+                    do
+                        if [ -f $item ]
+                        then
+                            echo $item
+                        fi
+                    done
+                    
+                    把脚本文件放到/etc下，然后执行看看效果，然后把脚本中 -f 改成 -d再试试。
+
+
+结束语：
+
+    Linux命令基础和shell脚本基础就先到这里，shell脚本需要用实际的工作中的任务去练习编写，才更有提高和更有趣。
+
+                    
 
         
     
