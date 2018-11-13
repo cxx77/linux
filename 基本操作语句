@@ -514,6 +514,34 @@
                 $ grep -n "Some options"
                 $ grep -i "option" file.txt ：-i 忽略大小写
                 $ grep -nv "Some options" file.txt ：表示不包含 Some options 字段；-v表示invert match，不匹配的意思
+                
+                
+第二十节：
+        netstat命令：network status的缩写，就是网络状态查询
+        
+        1. $ netstat -a  -a表示按照各个协议，分别统计连接数。按下q退出。
+        2. $ netstat -a | less  和less命令结合使用，较少的查看内容
+        3. $ netstat -at | less  t表示TCP
+        4. $ netstat -au | less  t表示UDP
+        5. $ netstat -l | less 这里l表示lisentening，表示监听连接
+        6. $ netstat -s | less 这里s表示static的意思
+        7. $ netstat -st | less 表示TCP查询
+        8. $ netstat -su | less 表示UDP的查询
+        9. $ netstat -p | less 这里p表示PID
+        10. $ netstat -n | less
+        11. $ netstat -c | less
+        
+第二十一节：
+        apt-get命令：安装和卸载linux的软件包。这里我们通过安装php5来实验
+        
+        1. $ apt-get update 可以升级下apt-get组件 $ sudo apt-get update
+        2. 源的概念和文件路径
+                $ gedit /etc/apt/sources.list
+                linux下安装软件都是根据配置源文件地址，去相应站点去下载和更新软件的。
+                由于linux一般是国外的发行版本，源的站点一般也是国外
+                有时候，你经常看到网上有相关文章介绍如何修改本地源，例如添加中国某一个大学的站点，才能下载一些软件。
+        3. $ sudo apt-get install php5
+        4. $ sudo apt-get remove php5 或者 $ sudo apt-get remove --purge ph5  这里purge表示删除由于php5配置的一些文件或者修改的数据一并删除。
                         
                 
                 
