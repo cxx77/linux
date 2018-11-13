@@ -30,19 +30,133 @@
       所以，shell脚本就是很多简单的命令，通过一些控制语句和其他方法去执行复杂任务的命令集合。
 
 
-第二节：which和whatis命令
-      which：告诉你相关程序的路径
-            $ which bash
-            $ which ls
-            $ which cat
-            $ which firefox
+第二节：shell？bash？shell脚本？
+    shell：
+        一个内核，里面集成了很多命令，shell负责和底层硬件打交道。
+        介绍的基础命令，可以说是shell命令。
+        shell程序的入口一般是在终端输入一些相关命令，然后不需要编译，直接去解释和运行命令的结果，给出相关反馈到终端上面。
+        所以，一句话来理解，shell是一个很多命令的集合，一个内核。
+        
+        实验楼支持的shell：$ cat /etc/shells
+        
+     bash:
+          bash 是一个为GNU计划编写的Unix shell。它的名字是一系列缩写：Bourne-Again SHell — 这是关于Bourne shell（sh）的一个双关语（Bourne again / born again）.Bash (GNU Bourne-Again Shell) 是许多Linux发行版的默认Shell。
+          还有许多传统UNIX上用的Shell，例如tcsh、csh、ash、bsh、ksh等等，Shell Script大致都类同，学会一种Shell以后，其它的Shell会很快就上手，大多数的时候，一个Shell Script通常可以在很多种Shell上使用。
+          所以，这就是我们为什么要使用bash脚本的原因。我们接下来的shell脚本都是基于bash。
+          
+     shell脚本：
+          shell脚本就是通过一些相关shell命令的组合来达到完成一个任务的文件，文件一般是以,sh结尾。
+        
+      写一个shell脚本，在终端打印hello shell：
+          $ cd Desktop
+          $ touch hello.sh
+          $ ls -l
+          $ chmod +x hello.sh
+          $ ls -l
+          $ gedit hello.sh
+          #! /bin/bash
+          echo 'Hello shell sceipt!'
+          
+          $ ./hello.sh
+          
+第三节：变量和备注
+    shell脚本中的备注和变量的用法。和其他编程语言一样，shell也有变量和备注。
+    变量就是一个可以存储值的容器，备注在shell中也是采用#符号来表示备注。
+    
+    1. 用井号后面内容（#）来表示备注
+    2. 定义一个变量
+        变量有系统变量和用户变量，在shell脚本中，经常用到系统变量。我们用$变量名称来引用变量
+        $BASH和$PATH都是系统变量，通过这个可以打印系统变量的值
+        看看用户自定义变量的使用，主要红圈代码语句等号前后不要有空格
+    3. 保存，添加执行权限，看看打印结果
+        $ touch demo.sh
+        $ gedit demo.sh
+        demo.sh中的内容：
+            #! /bin/bash
+            # input your commets here
             
-      whatis：查询一个命令的含义
-            $ whatis ls
-            $ whatis firefox
-            $ whatis cat
-            $ whatis top
+            echo "Hello shell" #comment here
             
-      比较 man top 与 whatis top 的区别
-            man -- 在线参考手册的接口
-            whatis -- 显示在线手册页的说明
+            echo "the system variable BASH is $BASH"
+            
+            echo $PATH  #system variable
+            
+            name=Anthony
+            echo "her name is $name"
+        $ ls -l
+        $ chmod +x demo.sh
+        $ ./demo.sh
+        
+        
+第四节：获取用户输入  
+    介绍获取用户输入的场景。大概是这样一个场景：
+        在命令终端提示用户输入一些什么内容，然后在用户输入完后，会打印刚刚用户输入的内容，这里要用到read这个命令。
+        $ cd Desktop
+        $ touch demo.sh
+        $ gedit demo.sh
+            #! /bin/bash
+            # learn about how to read from user input
+            
+            echo "please input your name:"
+            read name
+            echo "your name is $name"
+        $ chmod +x demo.sh
+        $ ./demo.sh
+        
+        同行输入：
+            $ read -p "please input your name: " name
+            $ echo "your name is $name"
+            -p是promote，提示的意思，就是可以让用户在提示语相同一行输入内容
+        
+        模拟下让用户输入用户名和密码的场景：
+            #! /bin/bash
+            
+            read -p "please input your name: " name
+            read -sp "please input ypur password: " password
+            echo ""  #换行
+            echo "your name is $name, your password is $pasword."
+            
+            -s一般在密码输入的时候用到，输入过程看不到输入的内容
+        
+        总结：
+            Shell中读取用户的输入的命令是read，一般结合echo一起使用。
+       
+       
+第五节：shell脚本如何传参数
+    索引传参数：
+        1. $ touch file.sh
+        2. $gedit file.sh
+            #! /bin/bash
+            echo $1 $2 $3
+        3. $ ./file.sh xixi hehe love
+        $[i]，i是索引号，和Python中列表读取元素是一样道理，采用索引。
+        $0表示 我们运行sh文件的语句 ./demo.sh，这个不是一个我们提供的真实的参数
+    
+    换成args数组方式去存储参数列表:
+        #! /bin/bash
+        args=("$@")
+        #echo ${args[0]} ${args[1]} ${args[2]} ${args[3]}
+        echo $@
+        
+        $@可以表示传入参数列表，直接打印出来:
+        
+    计算参数个数：
+        #! /bin/bash
+        args=("$0")
+        #echo ${args[0]} ${args[1]} ${args[2]} ${args[3]}
+        #echo $@
+        echo $#
+        
+        $#可以存储参数的个数值。
+        
+    
+        
+                
+            
+        
+        
+            
+        
+     
+      
+                
