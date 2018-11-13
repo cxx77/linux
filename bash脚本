@@ -361,14 +361,153 @@
             echo $( expr num1%num2 )
             乘法这个地方报错，原来在这个表达式中*这个需要转译才能被识别为乘法（*）
             
-        4. 做浮点型计算：bash默认是不支持浮点型数字计算，需要安装bc软件，然后通过bc才能计算浮点型
-            在终端输入: sudo apt-get install bc 回车就可以安装bc
-            #! /bin/bash
-            num1=20.5
-            num2=18
-            
-            echo "20.5+18" | bc
+    4. 做浮点型计算：bash默认是不支持浮点型数字计算，需要安装bc软件，然后通过bc才能计算浮点型
+        在终端输入: sudo apt-get install bc 回车就可以安装bc
+        #! /bin/bash
+        num1=20.5
+        num2=18
+
+        echo "20.5+18" | bc
         
+
+    5. case语句：
+        #! /bin/bash
+ 
+        score=$1
+
+        case $score in 
+            "90")
+                echo "A" ;;
+            "80")
+                echo "B" ;;
+            "70")
+                echo "B-" ;;
+            "60")
+                echo "C" ;;
+            * ) 
+                echo "Default value" ;;
+        esac
+        
+        脚本 * ，这个表示匹配任意的 case 情况，如果输入的参数不在 case 列举的情况，就执行默认的这种
+        score=$1,这里 $1 是代表输入的第一个参数。
+        
+    6. case语句的练习，在命令终端，让用户输入一些字符，然后判断输入的是字母还是数字，还是其他。
+        #! /bin/bash
+        echo "Please input some charactor: \C"
+        read value
+
+        case $value in 
+            [a-z])
+                echo "You had input $value a to z" ;;
+            [A-Z])
+                echo "You had inut $value A to Z" ;;
+            [0-9])
+                echo "You had input $value 0 to 9" ;;
+            ?)
+                echo "You had input $value is not a-z A-Z 0-9" ;;
+            * ) 
+                echo "Default value" ;;
+        esac
+        
+        ? 表示匹配一次，而 * 表示可以匹配多个结果
+        [a-z] 表示正则表达式，是表示小写字母 a-z 全部小写字母。
+
+    7. 数组：https://blog.csdn.net/u011541946/article/details/72631543
+        #! /bin/bash
+        os=('linux' 'unix' 'windows' 'Mac')
+        os[4]='Android' # add a element
+        #unset os[1]    # remove a element
+        echo "${os[@]}"
+        echo "${os[1]}"
+        echo "${!os[@]}"
+        echo "${#os[@]}"
+
+        # string is a arry object
+        string=feiegewjgwegewg
+        echo "${string[0]}"
+        echo "${string[1]}"
+        
+        string类型其实就是一个数组，只是把字符串全部存储在数组的索引为0的元素里
+
+第十节：while循环
+    1. while循环
+        历10以下整数的shell while循环写法：
+            #! /bin/bash
+            n=1
+            while [ $n le 10 ]
+            do 
+                echo "$n"
+                n=$(( n+1 ))
+            done
+            ***************************
+            n的自增也可以这样写
+            n=1
+            while [ $n le 10 ]
+            do 
+                echo "$n"
+                (( n++ )) # (( ++n ))
+            done
+            **************************
+            从1相加到100
+            n=1
+            total=0
+            while (( $n <= 100 ))
+            do
+                total=$(( total+n ))
+                (( n++ ))
+            done
+            echo $total
+        
+    2. while循环中使用sleep命令
+        从1到10，每隔一秒打印一个数字:
+            #! /bin/bash
+            # while loops
+            n=1
+
+            while (( $n <= 10 ))
+            do
+                echo $n
+                (( n++ ))
+                sleep 1
+
+            done
+        *****************************
+        实现一秒开一个终端:
+            #! /bin/bash
+            # while loops
+            n=1
+
+            while (( $n <= 3 ))
+            do
+                echo $n
+                (( n++ ))
+                xfce4-terminal &
+                sleep 1
+            done
+            
+    3. while循环读取文件内容
+        #! /bin/bash
+        while read p
+        do
+            echo $p
+        done < demo.sh
+        ***************************
+        cat demo.sh | while read p
+        do
+            echo $p
+        done
+        ***************************
+        while IFS=' ' read -r line
+        do
+            echo $line
+        done < demo.sh
+        
+        
+
+
+            
+    
+
         
 
     
