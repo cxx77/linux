@@ -149,6 +149,233 @@
         
         $#可以存储参数的个数值。
         
+
+第六节：if-then语句
+    shell中的if控制语句很像python中的语法
+    
+    demo.sh:
+        #! /bin/bash
+        score=91
+        
+        if (("$score">90))
+        then 
+            echo "well done"
+        fi
+        
+        word=abc
+        if [ $word="abc" ]  #[] 与比较语句之间一定要有空格
+        then
+            echo "word equals abc"
+        else
+            echo "word not equals abc"
+        fi
+        
+        num=6
+        if (($num>7))
+        then
+            echo "big"
+        elif (($num<7))
+        then
+            echo "small"
+        else
+            echo "euqal"
+        fi
+        
+        语句最后那个fi是一个结束语句，告诉shell脚本，遇到了fi就表示if语句的结束，估计fi是final的意思
+        
+    整数比较符:
+         -eq	: (equal to)相等          		    例如： if [ "$a" -eq "$b"  ]
+        -ne	: (not equal to)相等      		    例如： if [ "$a" -ne "$b"  ]
+        -gt	: (greater than)大于      		    例如： if [ "$a" -gt "$b"  ]
+        -ge	: (greater than or equal to)大于或等于      例如： if [ "$a" -ge "$b"  ]
+        -lt	: (less than)小于                           例如： if [ "$a" -lt "$b"  ]
+        -le	: (less than or equal to)小于或等于         例如： if [ "$a" -le "$b"  ]
+        <	: 小于                                      例如： if (( "$a" < "$b" ))
+        <=	: 小于等于                                  例如： if (( "$a" <= "$b" ))
+        >	: 大于                                      例如： if (( "$a" > "$b" ))
+        >=	: 大于等于                                  例如： if (( "$a" >= "$b" ))
+
+        字符串比较
+
+        =	: 等于                                      例如： if [ "$a" = "$b"   ]
+        ==	: 等于                                      例如： if [ "$a" == "$b"  ]
+        !=	: 不等于                                    例如： if [ "$a" != "$b"  ]
+        <	: 小于（ASCII字母顺序）                     例如： if [[ "$a" < "$b" ]]
+        >	: 大于（ASCII字母顺序）                     例如： if [[ "$a" > "$b" ]]
+        -z	: 字符不为空  
+        
+
+第七节：文件测试操作
+    通过文件的一些测试操作来练习下if语句，主要还是学习文件的不同操作方法
+    
+    1. 检查文件夹是否存在
+        #! /bin/bash
+        echo -e "Enter the name of file: \c"
+        read filename
+
+        if [ -e $filename ]
+        then
+            echo "file founded"
+        else
+            echo "file is not exist or not founded"
+        fi
+
+        -e就是exist的意思，表示文件是否存在。
+        第一开始输入一个test，发现不存在，然后通过mkdir创建了一个test的文件夹，再次运行脚本，就打印文件存在。
+        
+    2. 检查是否是常规文件或者目录，txt文件也可以找到，空文件夹找不到
+        #! /bin/bash
+        echo -e "Enter the name of file: \c"
+        read filename
+
+        if [ -f $filename ]
+        then
+            echo "$filename founded"
+        else
+            echo "$filename is not exist or not founded"
+        fi
+        
+        上面的-f表示file，判断是否是常规的文件
+        
+        #! /bin/bash
+        echo -e "Enter the name of file: \c"
+        read filename
+
+        if [ -d $filename ]
+        then
+            echo "$filename founded"
+        else
+            echo "$filename is not exist or not founded"
+        fi
+        
+        -d表示directory，判断是否是一个目录
+        
+    3. 检查文件是否是空（文件txt操作可判断是否为空，目录判断不正确）
+        #! /bin/bash
+        echo -e "Enter the name of file: \c"
+        read filename
+
+        if [ -s $filename ]
+        then
+            echo "$filename is not empty"
+        else
+            echo "$filename is empty"
+        fi
+        
+        -e表示empty，默认文件是不为空
+        
+
+第八节：在一个文件尾部写入内容
+    写一个脚本的功能是：
+        1. 先判断文件是否是常规文件；
+        2. 如果存在，继续判断文件是否有写的权限
+        3. 如果有写的权限，然后需要接受键盘的输入；如果文件没有权限，提示没有写入权限（结束）
+        4. 把输入的字符保存到文件的尾部，不能覆盖原来文件的内容
+        
+    demo.sh:
+        #! /bin/bash
+        
+        echo -e "Enter the name of file: \c"
+        read filename
+        
+        if [ -f $filename ]
+        then
+            if [ -w $filename ]
+            then
+                echo "$filename have write permissions"
+                cat >> $filename
+            else
+                echo "$filename do not have write permissions"
+            fi
+        else
+            echo "$filename is not exist"
+        fi
+        
+        -f表示判断是否常规文件，-w表示判断是否有write权限
+        
+    这里是手动输入字符，然后添加到文件尾部，在实际工作中，可以利用变量，来存储我们需要保存到文件的信息
+    也就是说cat >> file这部分可以调用别的变量或者脚本去实现自动产生内容，然后保存到文件的目的。
+    
+
+第九节：shell脚本基础
+    1. 逻辑与 -gt >; -ge >=; -lt <; -le <=;
+        #! /bin/bash
+        age=25
+        
+        if [ $age -gt 18 ] && [ $age -lt 30 ]
+        then
+            echo "valid age"
+        fi
+        **************************************
+        if [ $age -gt 18 -a $age -lt 30 ]
+        then
+            echo "valid age"
+        fi
+        **************************************
+        if [[ $age -gt 18 && $age -lt 30 ]]  #这个时候变成两个中括号了。
+        then
+            echo "valid age"
+        fi
+        
+    2. 逻辑或
+        #! /bin/bash
+        age=25
+        
+        if [ $age -eq 18 ] || [ $age -gt 20 ]
+        then
+            echo "valid age"
+        fi
+        **************************************
+        if [ $age -eq 18 -a $age -gt 30 ]
+        then
+            echo "valid age"
+        fi
+        **************************************
+        if [[ $age -gt 18 || $age -lt 30 ]]  #这个时候变成两个中括号了。
+        then
+            echo "valid age"
+        fi
+        
+    3. 基本的数学运算
+        #! /bin/bash
+        echo 3+5
+        
+        输出的是字符串，不是计算结果
+        **************************************
+        
+        标准的数学计算表达式写法:
+            num1=5
+            num2=7
+            echo $(( num1+num2 ))
+            echo $(( num1-num2 ))
+            echo $(( num1*num2 ))
+            echo $(( num1/num2 ))
+            echo $(( num1%num2 ))
+            **********************************
+            num1=5
+            num2=7
+            echo $( expr num1+num2 )  #7+5
+            echo $( expr num1-num2 )
+            echo $( expr num1\*num2 )
+            echo $( expr num1/num2 )
+            echo $( expr num1%num2 )
+            乘法这个地方报错，原来在这个表达式中*这个需要转译才能被识别为乘法（*）
+            
+        4. 做浮点型计算：bash默认是不支持浮点型数字计算，需要安装bc软件，然后通过bc才能计算浮点型
+            在终端输入: sudo apt-get install bc 回车就可以安装bc
+            #! /bin/bash
+            num1=20.5
+            num2=18
+            
+            echo "20.5+18" | bc
+        
+        
+
+    
+
+        
+        
+        
     
         
                 
