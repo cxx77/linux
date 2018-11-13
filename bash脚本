@@ -502,6 +502,99 @@
             echo $line
         done < demo.sh
         
+
+第十一节：until循环
+    until循环语句语法和while很相同：
+        while循环基本语法格式：
+            while [ 表达式为真 ]
+            do
+                 commond1语句
+                 command2语句
+                 ...
+            done
+
+        而until的语法格式如下：
+            until [ 表达式不为真 ]
+            do
+                 commond1语句
+                 command2语句
+                 ...
+            done
+            
+            #! /bin/bash
+            n=1
+            until [ $n -ge 10 ]
+            do 
+                echo "$n"
+                n=$(( n+1 ))
+            done   
+            **************************
+            从1相加到100
+            n=1
+            total=0
+            until (( $n > 100 ))
+            do
+                total=$(( total+n ))
+                (( n++ ))
+            done
+            echo $total
+            
+
+第十二节：for循环
+    1. for循环语法：
+            #! /bin/bash
+            for i in 1 2 3 4 5
+            do 
+                echo $i
+            done
+            *********************
+            total=0
+            for (( i=1; i<=100; i++ ))
+            do
+                total=$(( total+i ))
+            done
+            echo $total
+
+            for语法：
+                ======================================
+                for VARIABLE in 12345...N
+                do
+                    command1
+                    command2
+                    commandN
+                done
+
+                OR=======================================
+                for VARIABLE in file1 file2 file3
+                do
+                    command1 on $VARIABLE
+                    command2
+                    commandN
+                done
+
+                OR=======================================
+                for OUTPUT in $(Linux or unix commond here)
+                do
+                    command1 on $OUTPUT
+                    command2 on $OUTPUT
+                    commandN
+                done
+
+                OR=======================================
+                for (( 表达式1; 表达式2; 表达式3 ))
+                do
+                    command1
+                    command2
+                    commandN
+                done
+                
+        2. for循环去执行命令
+                for循环执行不同命令：
+                    #! 
+
+        
+    
+        
         
 
 
